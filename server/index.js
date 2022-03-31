@@ -14,7 +14,7 @@ app.use(express.json());
 //lo que llega procedente del frontend.
 app.post("/api/checkout", async (req, res) => {
   console.log(req.body);
-  // res.send("recibido");
+
   const { id, amount } = req.body;
 
   try {
