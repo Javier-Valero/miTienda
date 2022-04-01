@@ -18,6 +18,7 @@ import accounting from "accounting";
 import axios from "axios";
 import { useState } from "react";
 import { actionTypes } from "../reducer";
+import { DialerSip } from "@material-ui/icons";
 
 //Cargamos la conexión hacia la plataforma. Conectamos nuestro stripe
 const stripePromise = loadStripe(
@@ -51,6 +52,7 @@ const CheckoutForm = ({ backStep, nextStep }) => {
   const [loading, setLoading] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
+  let sin_completar = false;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -61,7 +63,7 @@ const CheckoutForm = ({ backStep, nextStep }) => {
     }); //puedo enviar el método de pago, pero todavía no sé que es lo que estoy pagando.
     setLoading(true);
     if (!error) {
-      console.log(paymentMethod);
+      console.log('mi_paymentMethod',paymentMethod);
       const { id } = paymentMethod;
       try {
         const { data } = await axios.post(
@@ -94,9 +96,14 @@ const CheckoutForm = ({ backStep, nextStep }) => {
     }
   };
 
+  const activa_boton = (e) => {
+    console.log("epo__esta_Ready", e.complete)
+    sin_completar = e.complete
+  }
+
   return (
     <form onSubmit={handleSubmit}>
-      <CardElement options={CARD_ELEMENT_OPTIONS} />
+      <CardElement options={CARD_ELEMENT_OPTIONS} onReady={(e) => activa_boton(e)} onChange={(e) => activa_boton(e)} />
       {/* input ya preparado para ser validado que trae la biblioteca de Stripe */}
       {/*  googlear stripe card test para acceder a las distintas tarjetas */}
       <div
@@ -109,9 +116,10 @@ const CheckoutForm = ({ backStep, nextStep }) => {
         <Button onClick={backStep} variant='outlined'>
           Back
         </Button>
+        {console.log('epo_________',stripe, elements)}
         <Button
           type='submit'
-          disabled={!stripe}
+          disabled={!stripe || !sin_completar}
           variant='contained'
           color='primary'
         >
