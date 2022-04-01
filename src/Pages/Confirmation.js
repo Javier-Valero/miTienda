@@ -6,12 +6,12 @@ const Confirmation = ({ message }) => {
   return (
     <>
       <div>
-        <Typography variant='h6'>{message}</Typography>
+        <Typography variant='h6' align='center'>{message}</Typography>
         <br />
         <Divider />
         <br />
-        <Typography variant='subtitle2' gutterBottom>
-          {message === "Successful Payment"
+        <Typography variant='subtitle2' align='center' gutterBottom>
+          {message === "Pago realizado con éxito."
             ? "Your booking reference : Rgh8787878lkj"
             : ""}
         </Typography>

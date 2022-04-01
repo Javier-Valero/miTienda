@@ -17,6 +17,17 @@ app.post("/api/checkout", async (req, res) => {
 
   const { id, amount } = req.body;
 
+  const mensaje_tarjeta_rechazada = { 
+    "generic_decline": "Su tarjeta ha sido rechazada.",
+    "insufficient_funds": "Su trajeta no tiene fondos suficientes.",
+    "lost_card": "Esta tarjeta ha sido declarada como perdida.",
+    "stolen_card": "Esta tarjeta ha sido declarada como robada.",
+    "expired_card": "Esta tarjeta ha expirado",
+    "incorrect_cvc": "El código CVC introducido no es correcto.",
+    "processing_error": "Rechazo por error de procesamiento.",
+    "incorrect_number": "Número incorrecto.",
+  };
+
   try {
     const payment = await stripe.paymentIntents.create({
       amount,
@@ -28,9 +39,10 @@ app.post("/api/checkout", async (req, res) => {
 
     console.log(payment);
 
-    return res.status(200).json({ message: "Successful Payment" });
+    return res.status(200).json({ message: "Pago realizado con éxito." });
   } catch (error) {
-    return res.json({ message: error.raw.message });
+    const codigo = error.raw.code === "card_declined" ? error.raw.decline_code : error.raw.code
+    return res.json({ message: mensaje_tarjeta_rechazada[codigo] });
   }
 });
 
