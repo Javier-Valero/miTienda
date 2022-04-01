@@ -45,6 +45,7 @@ const CARD_ELEMENT_OPTIONS = {
   },
 };
 
+
 const CheckoutForm = ({ backStep, nextStep }) => {
   const [{ basket, paymentMessage }, dispatch] = useStateValue();
   const [loading, setLoading] = useState(false);
@@ -76,7 +77,7 @@ const CheckoutForm = ({ backStep, nextStep }) => {
           type: actionTypes.SET_PAYMENT_MESSAGE,
           paymentMessage: data.message,
         });
-        if (data.message === "Successful Payment") {
+        if (data.message === "Pago realizado con éxito.") {
           dispatch({
             type: actionTypes.EMPTY_BASKET,
             basket: [],
