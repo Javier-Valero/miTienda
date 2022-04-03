@@ -19,6 +19,7 @@ import axios from "axios";
 import { useState } from "react";
 import { actionTypes } from "../reducer";
 import { DialerSip } from "@material-ui/icons";
+import { useEffect } from "react";
 
 //Cargamos la conexión hacia la plataforma. Conectamos nuestro stripe
 const stripePromise = loadStripe(
@@ -48,14 +49,17 @@ const CARD_ELEMENT_OPTIONS = {
 
 
 const CheckoutForm = ({ backStep, nextStep }) => {
-  const [{ basket, paymentMessage }, dispatch] = useStateValue();
+  const [{ basket }, dispatch] = useStateValue();
   const [loading, setLoading] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
-  let sin_completar = false;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if ( !document.getElementById("mi_tarjeta").classList.contains('StripeElement--complete') ) {
+      alert("La información de la trajeta no esta completa")
+      return
+    }
     //el hook useStripe nos devuelve la conexión a stripe.
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
@@ -96,14 +100,9 @@ const CheckoutForm = ({ backStep, nextStep }) => {
     }
   };
 
-  const activa_boton = (e) => {
-    console.log("epo__esta_Ready", e.complete)
-    sin_completar = e.complete
-  }
-
   return (
-    <form onSubmit={handleSubmit}>
-      <CardElement options={CARD_ELEMENT_OPTIONS} onReady={(e) => activa_boton(e)} onChange={(e) => activa_boton(e)} />
+    <form >
+      <CardElement id="mi_tarjeta" options={CARD_ELEMENT_OPTIONS} />
       {/* input ya preparado para ser validado que trae la biblioteca de Stripe */}
       {/*  googlear stripe card test para acceder a las distintas tarjetas */}
       <div
@@ -116,10 +115,9 @@ const CheckoutForm = ({ backStep, nextStep }) => {
         <Button onClick={backStep} variant='outlined'>
           Back
         </Button>
-        {console.log('epo_________',stripe, elements)}
         <Button
-          type='submit'
-          disabled={!stripe || !sin_completar}
+          onClick={handleSubmit}
+          disabled={!stripe}
           variant='contained'
           color='primary'
         >
