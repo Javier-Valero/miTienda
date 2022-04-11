@@ -8,7 +8,8 @@ const cors = require("cors");
 
 const app = express();
 
-app.use(cors({ origin: "http://localhost:3000" }));
+/* app.use(cors({ origin: "http://localhost:3000" })); */
+app.use(cors({ origin: "https://mt02-9e1b9.web.app/" }));
 app.use(express.json());
 
 //lo que llega procedente del frontend.
