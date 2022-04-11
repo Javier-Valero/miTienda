@@ -78,7 +78,7 @@ const CheckoutForm = ({ backStep, nextStep }) => {
           }
         );
         /* enviamos al backend, y la información que vamos a enviar al backend */
-        console.log(data); //lo que va a ir al backend
+        console.log("mi obejto data",data); //lo que va a ir al backend
         dispatch({
           type: actionTypes.SET_PAYMENT_MESSAGE,
           paymentMessage: data.message,
