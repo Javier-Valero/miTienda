@@ -50,8 +50,9 @@ app.post("/api/checkout", async (req, res) => {
 });
 
 
-exports.app = functions.https.onRequest(app);
+exports.app = functions.region('europe-west3').https.onRequest(app);
 /* exports.app = functions.https.onCall(app) */
 /* app.listen(3001, () => {
   console.log("Server on port", 3001);
 }); */
+
