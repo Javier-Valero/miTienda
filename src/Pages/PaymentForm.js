@@ -72,7 +72,7 @@ const CheckoutForm = ({ backStep, nextStep }) => {
       try {
         const { data } = await axios.post(
           /* "http://localhost:3001/api/checkout", */
-          "https://mt02-9e1b9.web.app:3001/api/checkout",
+          "http://localhost:5001/mt02-9e1b9/us-central1/app/api/checkout",
           {
             id,
             amount: getBasketTotal(basket) * 100,
