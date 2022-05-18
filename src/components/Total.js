@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Total = () => {
   const classes = useStyles();
-  const [{ basket }, dispatch] = useStateValue();
+  const [{ basket, user }, dispatch] = useStateValue();
 
   return (
     <div className={classes.root}>
@@ -32,6 +32,7 @@ const Total = () => {
         className={classes.button}
         variant='contained'
         color='secondary'
+        disabled={!user || basket.length === 0}
       >
         Tramitar pedido
       </Button>
