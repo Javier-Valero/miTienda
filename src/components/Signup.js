@@ -20,7 +20,7 @@ function Copyright() {
     <Typography variant='body2' color='textSecondary' align='center'>
       {"Copyright © "}
       <Link color='inherit' href='https://material-ui.com/'>
-        Your Website
+      nombre compañía
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -75,7 +75,7 @@ export default function SignUp() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component='h1' variant='h5'>
-          Sign up
+          Registro cuenta
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
@@ -87,7 +87,7 @@ export default function SignUp() {
                 required
                 fullWidth
                 id='firstName'
-                label='First Name'
+                label='Nombre'
                 autoFocus
               />
             </Grid>
@@ -97,7 +97,7 @@ export default function SignUp() {
                 required
                 fullWidth
                 id='lastName'
-                label='Last Name'
+                label='Apellidos'
                 name='lastName'
                 autoComplete='lname'
               />
@@ -110,7 +110,7 @@ export default function SignUp() {
                 required
                 fullWidth
                 id='email'
-                label='Email Address'
+                label='Email'
                 name='email'
                 autoComplete='email'
               />
@@ -123,7 +123,7 @@ export default function SignUp() {
                 required
                 fullWidth
                 name='password'
-                label='Password'
+                label='Contraseña'
                 type='password'
                 id='password'
                 autoComplete='current-password'
@@ -132,7 +132,7 @@ export default function SignUp() {
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value='allowExtraEmails' color='primary' />}
-                label='I want to receive inspiration, marketing promotions and updates via email.'
+                label='Quiero recibir notificaciones comerciales via email.'
               />
             </Grid>
           </Grid>
@@ -144,12 +144,12 @@ export default function SignUp() {
             className={classes.submit}
             onClick={signup}
           >
-            Sign Up
+            Confirmar
           </Button>
           <Grid container justify='flex-end'>
             <Grid item>
               <RouteLink to='/signin'>
-                Already have an account? Sign in
+                ¿Ya tienes una cuenta? Inicia la sesión
               </RouteLink>
             </Grid>
           </Grid>

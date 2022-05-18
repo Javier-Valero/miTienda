@@ -114,7 +114,7 @@ const CheckoutForm = ({ backStep, nextStep }) => {
         }}
       >
         <Button onClick={backStep} variant='outlined'>
-          Back
+          Atrás
         </Button>
         <Button
           onClick={handleSubmit}
@@ -125,7 +125,7 @@ const CheckoutForm = ({ backStep, nextStep }) => {
           {loading ? (
             <CircularProgress />
           ) : (
-            `Pay ${accounting.formatMoney(getBasketTotal(basket), "€")}`
+            `Pagar ${accounting.formatMoney(getBasketTotal(basket), "€")}`
           )}
         </Button>
       </div>
@@ -139,7 +139,7 @@ const PaymentForm = ({ backStep, nextStep }) => {
       <Review />
       <Divider />
       <Typography variant='h6' gutterBottom style={{ margin: "20px 0" }}>
-        Payment method
+        Método de pago
       </Typography>
       <Elements stripe={stripePromise}>
         {/* permite acceder al objeto Stripe desde sus hijos */}

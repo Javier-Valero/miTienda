@@ -3,7 +3,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
-import logo from "../assets/cuttevents.png";
+import logo from "../assets/logo.jpg";
 import { Badge, Button, CssBaseline } from "@material-ui/core";
 import { ShoppingCart } from "@material-ui/icons";
 import { useStateValue } from "../StateProvider";
@@ -57,8 +57,8 @@ const Navbar = () => {
               <IconButton>
                 <img
                   src={logo}
-                  alt='Commerce.js'
-                  height='25px'
+                  alt='logo.js'
+                  height='40px'
                   className={classes.image}
                 />
               </IconButton>
@@ -66,22 +66,23 @@ const Navbar = () => {
 
             <div className={classes.grow} />
             <Typography variant='h6' color='textPrimary' component='p'>
-              Hello {user ? user.email : "Guest"}
+              Hola {user ? user.email : "invitado"}
             </Typography>
             <div className={classes.button}>
               <Link to={!user && "/signin"}>
                 <Button onClick={handleAuth} variant='outlined'>
-                  <strong>{user ? "Sign Out" : "Sign In"}</strong>
+                  <strong>{user ? "Cerrar sesión" : "Iniciar sesión"}</strong>
                 </Button>
               </Link>
-
-              <Link to='/checkout-page'>
-                <IconButton aria-label='show cart items' color='inherit'>
-                  <Badge badgeContent={basket?.length} color='secondary'>
-                    <ShoppingCart fontSize='large' color='primary' />
-                  </Badge>
-                </IconButton>
-              </Link>
+              <Button disabled={basket?.length === 0}>
+                <Link to='/checkout-page' >
+                  <IconButton aria-label='show cart items' color='inherit'>
+                    <Badge badgeContent={basket?.length} color='secondary'>
+                      <ShoppingCart fontSize='large' color='primary' />
+                    </Badge>
+                  </IconButton>  
+                </Link>
+              </Button>
             </div>
           </Toolbar>
         </AppBar>
