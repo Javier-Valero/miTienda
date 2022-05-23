@@ -18,6 +18,8 @@ import accounting from "accounting";
 import axios from "axios";
 import { useState } from "react";
 import { actionTypes } from "../reducer";
+import { DialerSip } from "@material-ui/icons";
+import { useEffect } from "react";
 
 //Cargamos la conexión hacia la plataforma. Conectamos nuestro stripe
 const stripePromise = loadStripe(
@@ -47,13 +49,17 @@ const CARD_ELEMENT_OPTIONS = {
 
 
 const CheckoutForm = ({ backStep, nextStep }) => {
-  const [{ basket, paymentMessage }, dispatch] = useStateValue();
+  const [{ basket }, dispatch] = useStateValue();
   const [loading, setLoading] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if ( !document.getElementById("mi_tarjeta").classList.contains('StripeElement--complete') ) {
+      alert("La información de la trajeta no esta completa")
+      return
+    }
     //el hook useStripe nos devuelve la conexión a stripe.
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
@@ -61,18 +67,19 @@ const CheckoutForm = ({ backStep, nextStep }) => {
     }); //puedo enviar el método de pago, pero todavía no sé que es lo que estoy pagando.
     setLoading(true);
     if (!error) {
-      console.log(paymentMethod);
+      console.log('mi_paymentMethod',paymentMethod);
       const { id } = paymentMethod;
       try {
         const { data } = await axios.post(
-          "http://localhost:3001/api/checkout",
+          /* "http://localhost:3001/api/checkout", */
+          "http://localhost:5001/mt02-9e1b9/europe-west3/app/api/checkout",
           {
             id,
             amount: getBasketTotal(basket) * 100,
           }
         );
         /* enviamos al backend, y la información que vamos a enviar al backend */
-        console.log(data); //lo que va a ir al backend
+        console.log("mi obejto data",data); //lo que va a ir al backend
         dispatch({
           type: actionTypes.SET_PAYMENT_MESSAGE,
           paymentMessage: data.message,
@@ -95,8 +102,8 @@ const CheckoutForm = ({ backStep, nextStep }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <CardElement options={CARD_ELEMENT_OPTIONS} />
+    <form >
+      <CardElement id="mi_tarjeta" options={CARD_ELEMENT_OPTIONS} />
       {/* input ya preparado para ser validado que trae la biblioteca de Stripe */}
       {/*  googlear stripe card test para acceder a las distintas tarjetas */}
       <div
@@ -107,10 +114,10 @@ const CheckoutForm = ({ backStep, nextStep }) => {
         }}
       >
         <Button onClick={backStep} variant='outlined'>
-          Back
+          Atrás
         </Button>
         <Button
-          type='submit'
+          onClick={handleSubmit}
           disabled={!stripe}
           variant='contained'
           color='primary'
@@ -118,7 +125,7 @@ const CheckoutForm = ({ backStep, nextStep }) => {
           {loading ? (
             <CircularProgress />
           ) : (
-            `Pay ${accounting.formatMoney(getBasketTotal(basket), "€")}`
+            `Pagar ${accounting.formatMoney(getBasketTotal(basket), "€")}`
           )}
         </Button>
       </div>
@@ -132,7 +139,7 @@ const PaymentForm = ({ backStep, nextStep }) => {
       <Review />
       <Divider />
       <Typography variant='h6' gutterBottom style={{ margin: "20px 0" }}>
-        Payment method
+        Método de pago
       </Typography>
       <Elements stripe={stripePromise}>
         {/* permite acceder al objeto Stripe desde sus hijos */}

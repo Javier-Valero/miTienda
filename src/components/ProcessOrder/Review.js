@@ -8,7 +8,7 @@ const Review = () => {
   return (
     <>
       <Typography variant='h6' gutterBottom>
-        Order summary
+        Resumen de compra
       </Typography>
       <List disablePadding>
         {basket?.map((product) => (

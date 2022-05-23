@@ -14,7 +14,7 @@ import PaymentForm from "../../Pages/PaymentForm";
 import Confirmation from "../../Pages/Confirmation";
 import { useStateValue } from "../../StateProvider";
 
-const steps = ["Shipping address", "Payment details"];
+const steps = ["Dirección de envío", "Detalles de pago"];
 
 const Checkout = () => {
   const classes = useStyles();
@@ -37,7 +37,7 @@ const Checkout = () => {
       <main className={classes.layout}>
         <Paper className={classes.paper}>
           <Typography component='h1' variant='h4' align='center'>
-            Checkout
+            Tramitar pedido
           </Typography>
           <Stepper activeStep={activeStep} className={classes.stepper}>
             {steps.map((step) => (

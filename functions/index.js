@@ -1,3 +1,4 @@
+const functions = require("firebase-functions");
 const express = require("express");
 const Stripe = require("stripe");
 const stripe = new Stripe(
@@ -8,12 +9,13 @@ const cors = require("cors");
 
 const app = express();
 
-/* app.use(cors({ origin: "http://localhost:3000" })); */
-app.use(cors({ origin: "https://mt02-9e1b9.web.app/" }));
+app.use(cors({ origin: true }));
+/* app.use(cors({ origin: "https://mt02-9e1b9.web.app/" })) */
 app.use(express.json());
 
 //lo que llega procedente del frontend.
 app.post("/api/checkout", async (req, res) => {
+  console.log("Entro un poco");
   console.log(req.body);
 
   const { id, amount } = req.body;
@@ -47,6 +49,11 @@ app.post("/api/checkout", async (req, res) => {
   }
 });
 
-app.listen(3001, () => {
+
+exports.app = functions.https.onRequest(app);
+/* exports.appEur = functions.region('europe-west3').https.onRequest(app); */
+/* exports.app = functions.https.onCall(app) */
+/* app.listen(3001, () => {
   console.log("Server on port", 3001);
-});
+}); */
+
