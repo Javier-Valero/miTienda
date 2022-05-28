@@ -8,7 +8,7 @@ import { Badge, Button, CssBaseline } from "@material-ui/core";
 import { ShoppingCart } from "@material-ui/icons";
 import { useStateValue } from "../StateProvider";
 import { Link, useHistory } from "react-router-dom";
-import { auth } from "../firebase";
+import { auth } from "../firebase/firebaseConfig";
 import { actionTypes } from "../reducer";
 import Grid from "@material-ui/core/Grid";
 

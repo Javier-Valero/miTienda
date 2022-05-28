@@ -18,7 +18,7 @@ const Confirmation = ({ message }) => {
       </div>
       <br />
       <Button component={Link} to='/' variant='outlined' type='button'>
-        Back to Home Page
+        Volver a página Inicio
       </Button>
     </>
   );

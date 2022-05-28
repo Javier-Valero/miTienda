@@ -1,7 +1,8 @@
 {
   "projects": {
-    "default": "mt02-9e1b9",
-    "probandoPagosStripe": "mt02-9e1b9"
+    "default": "locust-a0ff0",
+    "probandoPagosStripe": "mt02-9e1b9",
+    "almaDVJ": "locust-a0ff0"
   },
   "targets": {}
 }

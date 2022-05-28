@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import SignIn from "./components/Signin";
 import SignUp from "./components/Signup";
-import { auth } from "./firebase";
+import { auth } from "./firebase/firebaseConfig";
 import { useStateValue } from "./StateProvider";
 import { actionTypes } from "./reducer";
 import Checkout from "./components/ProcessOrder/Checkout";

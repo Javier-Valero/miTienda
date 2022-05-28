@@ -13,7 +13,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Link as RouteLink, useHistory } from "react-router-dom";
-import { auth } from "../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase/firebaseConfig";
 
 function Copyright() {
   return (
@@ -56,10 +57,18 @@ export default function SignIn() {
 
   const signin = (e) => {
     e.preventDefault();
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .then((auth) => history.push("/"))
-      .catch((err) => alert(err.message));
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        history.push("/")
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log('MI error: ', errorMessage, ",codigo: ", errorCode)
+        if ( errorCode === "auth/user-not-found" ) { alert("No existe el usuario")}
+      });
   };
 
   return (
@@ -70,7 +79,7 @@ export default function SignIn() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component='h1' variant='h5'>
-          Iniciar sesión
+          Iniciar sesióne
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
@@ -116,7 +125,7 @@ export default function SignIn() {
           <Grid container>
             <Grid item xs>
               <Link href='#' variant='body2'>
-                ¿Contraseña olvidada?
+                ¿Contraseña olvidadaaaa?
               </Link>
             </Grid>
             <Grid item >

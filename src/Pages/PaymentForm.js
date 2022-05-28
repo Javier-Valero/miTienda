@@ -20,6 +20,9 @@ import { useState } from "react";
 import { actionTypes } from "../reducer";
 import { DialerSip } from "@material-ui/icons";
 import { useEffect } from "react";
+import { functions } from "../firebase/firebaseConfig"
+import { httpsCallable } from "firebase/functions";
+//  import { functions, httpsCallable } from "../firebase";
 
 //Cargamos la conexión hacia la plataforma. Conectamos nuestro stripe
 const stripePromise = loadStripe(
@@ -70,27 +73,36 @@ const CheckoutForm = ({ backStep, nextStep }) => {
       console.log('mi_paymentMethod',paymentMethod);
       const { id } = paymentMethod;
       try {
-        const { data } = await axios.post(
-          /* "http://localhost:3001/api/checkout", */
-          "http://localhost:5001/mt02-9e1b9/europe-west3/app/api/checkout",
-          {
-            id,
-            amount: getBasketTotal(basket) * 100,
-          }
-        );
-        /* enviamos al backend, y la información que vamos a enviar al backend */
-        console.log("mi obejto data",data); //lo que va a ir al backend
-        dispatch({
-          type: actionTypes.SET_PAYMENT_MESSAGE,
-          paymentMessage: data.message,
-        });
-        if (data.message === "Pago realizado con éxito.") {
-          dispatch({
-            type: actionTypes.EMPTY_BASKET,
-            basket: [],
+        const checkOut = httpsCallable(functions, 'checkOut');
+        checkOut({ id, amount: getBasketTotal(basket) * 100 })
+          .then((result) => {
+            // Read result of the Cloud Function.
+            /** @type {any} */
+            console.log("mi obejto data",result);
+            const data = result.data;
+            const sanitizedMessage = data.text;
+             /* enviamos al backend, y la información que vamos a enviar al backend */
+            console.log("mi obejto data",data); //lo que va a ir al backend
+            dispatch({
+              type: actionTypes.SET_PAYMENT_MESSAGE,
+              paymentMessage: data.message,
+            });
+            if (data.message === "Pago realizado con éxito.") {
+              dispatch({
+                type: actionTypes.EMPTY_BASKET,
+                basket: [],
+              });
+            }
+          })
+          .catch((error) => {
+            // Getting the Error details.
+            const code = error.code;
+            const message = error.message;
+            const details = error.details;
+            console.log("mi ERROR:",message)
+            // ...
           });
-        }
-
+          console.log("mi obejto checkOut",checkOut);
         elements.getElement(CardElement).clear();
         nextStep();
       } catch (error) {

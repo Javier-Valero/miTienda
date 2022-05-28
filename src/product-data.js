@@ -17,7 +17,7 @@ const products = [
     price: 1000,
     rating: 4,
     image:
-      "https://cnet3.cbsistatic.com/img/yjrw7VgWV7a95AvK8Ym0Np4bFXY=/1200x675/2017/06/27/13484418-bfd9-41e2-8f2d-9b4afb072da8/apple-macbook-pro-15-inch-2017-14.jpg",
+      "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.notebookcheck.org%2FLa-revision-del-MacBook-Pro-13-esta-prevista-para-el-8-de-marzo-con-Apple-M2-una-Touch-Bar-sin-muesca-y-sin-pantalla-ProMotion.600158.0.html&psig=AOvVaw044S9RRlodQxz2OC5Hni1R&ust=1653417313829000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCLjy0NCh9vcCFQAAAAAdAAAAABAY",
     description:
       "Apple MacBook Pro is a macOS laptop with a 13.30-inch display that has a resolution of 2560x1600 pixels. It is powered by a Core i5 processor and it comes with 12GB of RAM. The Apple MacBook Pro packs 512GB of SSD storage.",
   },

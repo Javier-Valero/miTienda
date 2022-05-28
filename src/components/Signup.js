@@ -13,7 +13,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Link as RouteLink, useHistory } from "react-router-dom";
-import { auth } from "../firebase";
+import { auth } from "../firebase/firebaseConfig";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 function Copyright() {
   return (
@@ -56,8 +57,7 @@ export default function SignUp() {
 
   const signup = (e) => {
     e.preventDefault();
-    auth
-      .createUserWithEmailAndPassword(email, password)
+    createUserWithEmailAndPassword(auth, email, password)
       .then((auth) => {
         console.log(auth);
         if (auth) {
